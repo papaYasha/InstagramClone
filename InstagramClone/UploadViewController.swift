@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class UploadViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
@@ -15,9 +16,30 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
         super.viewDidLoad()
         imageView.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
+        imageView.addGestureRecognizer(gestureRecognizer)
     }
 
-    @IBAction func uploadButtonSaved(_ sender: Any) {
+    @IBAction func uploadButtonClicked(_ sender: Any) {
+        let storage = Storage.storage()
+        let storageReference = storage.reference()
+        
+        let mediaFolder = storageReference.child("media")
+        
+        if let data = imageView.image?.jpegData(compressionQuality: 0.5) {
+            let imageReference = mediaFolder.child("image.jpg")
+            imageReference.putData(data, metadata: nil) { metadata, error in
+                if error != nil {
+                    print(error?.localizedDescription)
+                } else {
+                    imageReference.downloadURL { url, error in
+                        if error == nil {
+                            let imageURL = url?.absoluteURL
+                            print(imageURL)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @objc func chooseImage() {
