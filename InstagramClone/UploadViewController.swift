@@ -26,15 +26,24 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
         let mediaFolder = storageReference.child("media")
         
         if let data = imageView.image?.jpegData(compressionQuality: 0.5) {
-            let imageReference = mediaFolder.child("image.jpg")
+            let uuid = UUID().uuidString
+            let imageReference = mediaFolder.child("\(uuid).jpg")
             imageReference.putData(data, metadata: nil) { metadata, error in
                 if error != nil {
-                    print(error?.localizedDescription)
+                    self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "ErrorLocalDis")
                 } else {
                     imageReference.downloadURL { url, error in
                         if error == nil {
                             let imageURL = url?.absoluteURL
-                            print(imageURL)
+                            let firestoreDatabase = Firestore.firestore()
+                            var fireStoreReference: DocumentReference? = nil
+                            let firestorePost = ["imageURL": imageURL!, "postedBy": Auth.auth().currentUser?.email, "postComment" : self.commetText.text, "date": "date", "likes": 0] as [String: Any]
+                            
+                            fireStoreReference = firestoreDatabase.collection("Posts").addDocument(data: firestorePost, completion: { error in
+                                if error != nil {
+                                    self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "ErrorHZ")
+                                }
+                            })
                         }
                     }
                 }
@@ -53,5 +62,11 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imageView.image = info[.originalImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
+    }
+    func makeAlert(titleInput: String, messageInput: String) {
+        let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okButton)
+        self.present(alert, animated: true, completion: nil)
     }
 }
