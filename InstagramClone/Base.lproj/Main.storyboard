@@ -15,14 +15,39 @@
                     <view key="view" contentMode="scaleToFill" id="AMH-TR-Twp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aNr-rN-7R3">
+                                <rect key="frame" x="71" y="44" width="272" height="277"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sw7-AN-mbH">
+                                <rect key="frame" x="20" y="363" width="374" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GV1-KQ-l5S">
+                                <rect key="frame" x="143" y="482" width="128" height="87"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="uploadButtonSaved:" destination="MkM-XP-IfE" eventType="touchUpInside" id="eVU-GW-mZK"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="eJD-yV-VZW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Upload" image="u.circle.fill" catalog="system" id="bGb-M3-rjk"/>
+                    <connections>
+                        <outlet property="commetText" destination="sw7-AN-mbH" id="P8i-1y-Ghh"/>
+                        <outlet property="imageView" destination="aNr-rN-7R3" id="0gv-M4-w3z"/>
+                        <outlet property="uploadButton" destination="GV1-KQ-l5S" id="Jv7-D5-yMV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWy-rA-dss" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="468" y="330"/>
+            <point key="canvasLocation" x="466.66666666666669" y="329.46428571428572"/>
         </scene>
         <!--Settings-->
         <scene sceneID="mo9-Qg-Xx1">
@@ -126,7 +151,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="fOE-Be-TVf">
             <objects>
-                <tabBarController id="KDu-ER-vVo" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBar" id="KDu-ER-vVo" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="8Sa-8x-8FP"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pE7-ml-WCr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>

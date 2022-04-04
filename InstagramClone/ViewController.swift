@@ -19,7 +19,18 @@ class ViewController: UIViewController {
     }
 
     @IBAction func signInClicked(_ sender: Any) {
-        performSegue(withIdentifier: "2FeedVC", sender: nil)
+        
+        if emailTextField.text != "" && passwordTextField.text != "" {
+            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { authData, error in
+                if error != nil {
+                    self.makeAlert(title: "Error", message: "user.pasword")
+                } else {
+                    self.performSegue(withIdentifier: "2FeedVC", sender: nil)
+                }
+            }
+        } else {
+           makeAlert(title: "Error", message: "psw/log")
+        }
     }
     
     @IBAction func signUpClicked(_ sender: Any) {
